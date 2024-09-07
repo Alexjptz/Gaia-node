@@ -145,6 +145,7 @@ while true; do
                 echo ""
                 echo -e "\e[31mНЕ УДАЛОСЬ УДАЛИТЬ НОДУ (FAILD TO DELETE THE NODE)!!!!\e[0m"
                 echo ""
+            fi
             ;;
         6)
             # bot installation
