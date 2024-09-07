@@ -5,6 +5,33 @@ tput civis
 
 # Put your logo here if nessesary
 
+echo -e "\e[33m"
+echo -e '----------_____--------------------_____----------------_____----------'
+echo -e '---------/\----\------------------/\----\--------------/\----\---------'
+echo -e '--------/::\____\----------------/::\----\------------/::\----\--------'
+echo -e '-------/:::/----/---------------/::::\----\-----------\:::\----\-------'
+echo -e '------/:::/----/---------------/::::::\----\-----------\:::\----\------'
+echo -e '-----/:::/----/---------------/:::/\:::\----\-----------\:::\----\-----'
+echo -e '----/:::/____/---------------/:::/__\:::\----\-----------\:::\----\----'
+echo -e '----|::|----|---------------/::::\---\:::\----\----------/::::\----\---'
+echo -e '----|::|----|-----_____----/::::::\---\:::\----\--------/::::::\----\--'
+echo -e '----|::|----|----/\----\--/:::/\:::\---\:::\----\------/:::/\:::\----\-'
+echo -e '----|::|----|---/::\____\/:::/--\:::\---\:::\____\----/:::/--\:::\____\'
+echo -e '----|::|----|--/:::/----/\::/----\:::\--/:::/----/---/:::/----\::/----/'
+echo -e '----|::|----|-/:::/----/--\/____/-\:::\/:::/----/---/:::/----/-\/____/-'
+echo -e '----|::|____|/:::/----/------------\::::::/----/---/:::/----/----------'
+echo -e '----|:::::::::::/----/--------------\::::/----/---/:::/----/-----------'
+echo -e '----\::::::::::/____/---------------/:::/----/----\::/----/------------'
+echo -e '-----~~~~~~~~~~--------------------/:::/----/------\/____/-------------'
+echo -e '----------------------------------/:::/----/---------------------------'
+echo -e '---------------------------------/:::/----/----------------------------'
+echo -e '---------------------------------\::/----/-----------------------------'
+echo -e '----------------------------------\/____/------------------------------'
+echo -e '-----------------------------------------------------------------------'
+echo -e '\e[0m'
+
+echo -e "\n \e[33mПодпишись на мой канал\e[0m Beloglazov invest, \n чтобы быть в курсе самых актуальных нод и активностей \n \e[33mhttps://t.me/beloglazovinvest \e[0m \n"
+
 sleep 2
 
 while true; do
@@ -12,12 +39,14 @@ while true; do
     echo "2. Установка GaiaNet (Install)"
     echo "3. О нодe (About Node)"
     echo "4. Обновить (Start or update node)"
-    echo "5. Удалить ноду (Delete node)"
-    echo "6. Установить бота (Install Bot)"
-    echo "7. Запустить бота (Start bot)"
-    echo "8. Остановить бота (Stop bot)"
-    echo "9. Удалить бота (Delete bot)"
-    echo "10. Выход (Exit)"
+    echo "5. Перезапуск ноды (Restart node)"
+    echo "6. Удалить ноду (Delete node)"
+    echo -e "\e[33m-----------------------------------------------\e[0m"
+    echo "7. Установить бота (Install Bot)"
+    echo "8. Запустить бота (Start bot)"
+    echo "9. Остановить бота (Stop bot)"
+    echo "10. Удалить бота (Delete bot)"
+    echo "11. Выход (Exit)"
     echo ""
     read -p "Выберите опцию (Select option): " option
 
@@ -136,9 +165,21 @@ while true; do
             fi
             ;;
         5)
+            # restart node
+            if gaianet stop && gaianet start; then
+                sleep 1
+                echo ""
+                echo -e "\e[32mНОДА ЗАПУЩЕНА И РАБОТАЕТ (NODE STARTING AND RUNNING)!!!!\e[0m"
+                echo ""
+            else
+                echo ""
+                echo -e "\e[31mНЕ УДАЛОСЬ ПЕРЕЗАПУСТИТЬ НОДУ (FAILD TO RESTART THE NODE)!!!!\e[0m"
+                echo ""
+            fi
+            ;;
+        6)
             # Delete node
-            if curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash
-            then
+            curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash; then
                 echo ""
                 echo -e "\e[33m--- НОДА УДАЛЕНА. NODE DELETED ---\e[0m"
                 echo ""
@@ -148,7 +189,7 @@ while true; do
                 echo ""
             fi
             ;;
-        6)
+        7)
             # bot installation
             echo -e "\e[33mНачинаем установку Бота (Starting BOT installation)...\e[0m"
             echo ""
@@ -181,7 +222,7 @@ while true; do
                 echo ""
             fi
             ;;
-        7)
+        8)
             # start bot
             if screen -dmS faker_session python3 ~/random_chat_with_faker.py; then
                 sleep 1
@@ -194,7 +235,7 @@ while true; do
                 echo ""
             fi
             ;;
-        8)
+        9)
             # stop bot
             if screen -X -S faker_session quit; then
                 sleep 1
@@ -207,7 +248,7 @@ while true; do
                 echo ""
             fi
             ;;
-        9)
+        10)
             # delete bot
             if screen -X -S faker_session quit; then
                 sleep 1
@@ -231,7 +272,7 @@ while true; do
                 echo ""
             fi
             ;;
-        10)
+        11)
             # Stop script and exit
             echo -e "\e[31mСкрипт остановлен (Script stopped)\e[0m"
             echo ""
