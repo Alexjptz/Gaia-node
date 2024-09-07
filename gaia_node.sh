@@ -137,7 +137,8 @@ while true; do
             ;;
         5)
             # Delete node
-            if curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash; then
+            if curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash
+            then
                 echo ""
                 echo -e "\e[33m--- НОДА УДАЛЕНА. NODE DELETED ---\e[0m"
                 echo ""
