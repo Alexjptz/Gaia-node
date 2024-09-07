@@ -211,7 +211,7 @@ while true; do
             echo -e "\e[33mНастраиваем бота (Fixing Bot)...\e[0m"
             echo ""
             sleep 1
-            if sed -i "s|SUBDOMAIN|https://$NODE_ID.us.gaianet.network|g" random_chat_with_faker.py; then
+            if sed -i "s|SUBDOMAIN|https://$NODE_ID.us.gaianet.network/v1/chat/completions|g" random_chat_with_faker.py; then
                 sleep 1
                 echo ""
                 echo -e "\e[32mБОТ НАСТРОЕН И ГОТОВ (BOT FIXED AND READY)!!!!\e[0m"
