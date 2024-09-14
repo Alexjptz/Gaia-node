@@ -183,7 +183,9 @@ while true; do
             ;;
         6)
             # Delete node
-            if cd $HOME && curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash; then
+            source $HOME/.bashrc
+            if cd $HOME && curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash && rm -rvf .bash_profile .bash_profile.gaianet_backup .bashrc .bashrc.gaianet_backup .wasmedge
+            then
                 echo ""
                 echo -e "\e[33m--- НОДА УДАЛЕНА. NODE DELETED ---\e[0m"
                 echo ""
@@ -192,6 +194,7 @@ while true; do
                 echo -e "\e[31mНЕ УДАЛОСЬ УДАЛИТЬ НОДУ (FAILED TO DELETE THE NODE)!!!!\e[0m"
                 echo ""
             fi
+
             ;;
         7)
             # bot installation
