@@ -55,6 +55,7 @@ while true; do
             echo -e "\e[33mНачинаем подготовку (Starting preparation)...\e[0m"
             sleep 1
             # Update and install packages
+            cd $HOME
             echo -e "\e[33mОбновляем и устанавливаем пакеты (Updating and installing packages)...\e[0m"
             if sudo apt update && sudo apt upgrade -y && sudo apt install -y curl sed git jq lz4 build-essential screen nano unzip python3-pip; then
                 sleep 1
@@ -87,7 +88,7 @@ while true; do
             echo ""
             sleep 2
 
-            if curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/install.sh' | bash; then
+            if cd $HOME && curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/install.sh' | bash; then
                 sleep 1
                 echo -e "Установка GaiaNet (Installation GaiaNet): \e[32mУспешно (Success)\e[0m"
                 echo ""
@@ -99,7 +100,7 @@ while true; do
 
             echo -e "\e[33mИнициализируем GaiaNet (Init GaiaNet)...\e[0m"
             echo ""
-            if source ~/.bashrc && gaianet init --config https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen2-0.5b-instruct/config.json; then
+            if source $HOME/.bashrc && gaianet init --config https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen2-0.5b-instruct/config.json; then
                 sleep 1
                 echo -e "Инициализация GaiaNet (Init GaiaNet): \e[32mУспешно (Success)\e[0m"
                 echo ""
@@ -118,19 +119,20 @@ while true; do
                 echo ""
             else
                 echo ""
-                echo -e "\e[31mНЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILD TO START THE NODE)!!!!\e[0m"
+                echo -e "\e[31mНЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILED TO START THE NODE)!!!!\e[0m"
                 echo ""
             fi
             ;;
         3)
             # node info
-            gaianet info
+            cd $HOME && gaianet info
             ;;
         4)
             # update node
             echo -e "\e[33mОбновляем ноду (Updating node)...\e[0m"
             echo ""
             sleep 2
+            cd $HOME
             if gaianet stop; then
                 sleep 1
                 echo ""
@@ -160,12 +162,13 @@ while true; do
                 echo ""
             else
                 echo ""
-                echo -e "\e[31mНЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILD TO START THE NODE)!!!!\e[0m"
+                echo -e "\e[31mНЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILED TO START THE NODE)!!!!\e[0m"
                 echo ""
             fi
             ;;
         5)
             # restart node
+            cd $HOME
             if gaianet stop && gaianet start; then
                 sleep 1
                 echo ""
@@ -173,19 +176,20 @@ while true; do
                 echo ""
             else
                 echo ""
-                echo -e "\e[31mНЕ УДАЛОСЬ ПЕРЕЗАПУСТИТЬ НОДУ (FAILD TO RESTART THE NODE)!!!!\e[0m"
+                echo -e "\e[31mНЕ УДАЛОСЬ ПЕРЕЗАПУСТИТЬ НОДУ (FAILED TO RESTART THE NODE)!!!!\e[0m"
                 echo ""
             fi
             ;;
         6)
             # Delete node
+            cd $HOME
             if curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash; then
                 echo ""
                 echo -e "\e[33m--- НОДА УДАЛЕНА. NODE DELETED ---\e[0m"
                 echo ""
             else
                 echo ""
-                echo -e "\e[31mНЕ УДАЛОСЬ УДАЛИТЬ НОДУ (FAILD TO DELETE THE NODE)!!!!\e[0m"
+                echo -e "\e[31mНЕ УДАЛОСЬ УДАЛИТЬ НОДУ (FAILED TO DELETE THE NODE)!!!!\e[0m"
                 echo ""
             fi
             ;;
@@ -194,6 +198,7 @@ while true; do
             echo -e "\e[33mНачинаем установку Бота (Starting BOT installation)...\e[0m"
             echo ""
             sleep 2
+            cd $HOME
             read -p "Введите (Enter) NODE ID: " NODE_ID
 
             echo -e "\e[33mСкачиваем бота (Downloading Bot)...\e[0m"
@@ -218,7 +223,7 @@ while true; do
                 echo ""
             else
                 echo ""
-                echo -e "\e[31mНЕ УДАЛОСЬ НАСТРОИТЬ БОТА (FAILD TO FIX THE BOT)!!!!\e[0m"
+                echo -e "\e[31mНЕ УДАЛОСЬ НАСТРОИТЬ БОТА (FAILED TO FIX THE BOT)!!!!\e[0m"
                 echo ""
             fi
             ;;
@@ -231,7 +236,7 @@ while true; do
                 echo ""
             else
                 echo ""
-                echo -e "\e[31mНЕ УДАЛОСЬ ЗАПУСТИТЬ БОТА (FAILD TO START BOT)!!!!\e[0m"
+                echo -e "\e[31mНЕ УДАЛОСЬ ЗАПУСТИТЬ БОТА (FAILED TO START BOT)!!!!\e[0m"
                 echo ""
             fi
             ;;
@@ -261,7 +266,7 @@ while true; do
                 echo ""
             fi
 
-            if rm -rvf /root/random_chat_with_faker.py; then
+            if rm -rvf $HOME/random_chat_with_faker.py; then
                 sleep 1
                 echo ""
                 echo -e "\e[32mБОТ УДАЛЕН (BOT DELETED)!\e[0m"
