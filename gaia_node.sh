@@ -100,7 +100,8 @@ while true; do
 
             echo -e "\e[33mИнициализируем GaiaNet (Init GaiaNet)...\e[0m"
             echo ""
-            if source $HOME/.bashrc && gaianet init --config https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen2-0.5b-instruct/config.json; then
+            source $HOME/.bashrc
+            if gaianet init --config https://raw.githubusercontent.com/GaiaNet-AI/node-configs/main/qwen2-0.5b-instruct/config.json; then
                 sleep 1
                 echo -e "Инициализация GaiaNet (Init GaiaNet): \e[32mУспешно (Success)\e[0m"
                 echo ""
@@ -182,8 +183,7 @@ while true; do
             ;;
         6)
             # Delete node
-            cd $HOME
-            if curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash; then
+            if cd $HOME && curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash; then
                 echo ""
                 echo -e "\e[33m--- НОДА УДАЛЕНА. NODE DELETED ---\e[0m"
                 echo ""
