@@ -78,7 +78,7 @@ while true; do
                 echo ""
                 exit 1
             fi
-
+            rm -r $HOME/.bashrc
             echo -e "\e[33m--- ПОДГОТОВКА ЗАВЕРШЕНА. PREPARATION COMPLETED ---\e[0m"
             echo ""
             ;;
