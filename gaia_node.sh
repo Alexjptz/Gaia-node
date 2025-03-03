@@ -116,6 +116,7 @@ while true; do
             echo ""
             sleep 2
             cd $HOME
+            source $HOME/.bashrc
             if gaianet stop; then
                 sleep 1
                 echo ""
