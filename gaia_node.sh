@@ -175,8 +175,9 @@ while true; do
                 echo "3. О нодe (About Node)"
                 echo "4. Обновить (Update node)"
                 echo "5. Перезапуск (Restart)"
-                echo "6. Удалить (Delete)"
-                echo "7. Выход (Exit)"
+                echo "6. Восстановить (Recovery)"
+                echo "7. Удалить (Delete)"
+                echo "8. Выход (Exit)"
                 echo
                 read -p "Выберите опцию (Select option): " option
                 case $option in
@@ -267,6 +268,18 @@ while true; do
                         run_commands "gaianet stop && sleep 5 && gaianet start"
                         ;;
                     6)
+                        # RESTORE
+                        process_notification "Восстанавлтиваем (Recovery)..."
+                        cd $HOME
+                        source $HOME/.bashrc
+                        gaianet stop
+                        gaianet init
+                        gaianet start
+                        echo
+                        show_blue "Проверьте статус на сайте. Check node status on website"
+                        echo
+                        ;;
+                    7)
                         # DELETE
                         process_notification "Удаление (Deleting)..."
                         echo
@@ -301,7 +314,7 @@ while true; do
                             esac
                         done
                         ;;
-                    7)
+                    8)
                         # EXIT
                         break
                         ;;
