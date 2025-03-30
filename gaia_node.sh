@@ -138,6 +138,8 @@ Restart=always
 User=$USERNAME
 Group=$USERNAME
 WorkingDirectory=$HOME_DIR/gaia-bot
+StandardOutput=journal
+StandardError=journal
 
 [Install]
 WantedBy=multi-user.target" > /etc/systemd/system/gaia-bot.service
@@ -182,13 +184,13 @@ while true; do
                         # PREPARATION
                         process_notification "Начинаем подготовку (Starting preparation)..."
                         cd $HOME
-                        run_commands "sudo apt update && sudo apt upgrade -y"
+                        run_commands "apt update && apt upgrade -y"
 
                         process_notification "Устанавливаем дополнительные пакеты  (Installing additional packages)..."
-                        run_commands "sudo apt install -y curl sed git jq lz4 build-essential screen nano mc unzip python3-pip python3-dev python3-venv"
+                        run_commands "apt install -y curl sed git jq lz4 build-essential screen nano mc unzip python3-pip python3-dev python3-venv"
                         run_commands "pip3 install aiohttp"
 
-                        run_commands "sudo fuser -k 8080/tcp"
+                        fuser -k 8080/tcp
                         sleep 3
 
                         show_green "--- ПОГОТОВКА ЗАЕРШЕНА. PREPARATION COMPLETED ---"
@@ -222,10 +224,12 @@ while true; do
 
                         if gaianet start; then
                             echo
-                            echo "--- НОДА ЗАПУЩЕНА И РАБОТАЕТ (NODE STARTED AND RUNNING) ---"
+                            show_green "--- НОДА ЗАПУЩЕНА И РАБОТАЕТ (NODE STARTED AND RUNNING) ---"
+                            echo
                         else
                             echo
-                            echo "--- НЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILED TO START THE NODE) ---"
+                            show_red "--- НЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILED TO START THE NODE) ---"
+                            echo
                         fi
                         ;;
                     3)
@@ -261,12 +265,6 @@ while true; do
                         cd $HOME
                         source $HOME/.bashrc
                         run_commands "gaianet stop && sleep 5 && gaianet start"
-                        echo
-                            echo "--- НОДА ЗАПУЩЕНА И РАБОТАЕТ (NODE STARTED AND RUNNING) ---"
-                        else
-                            echo
-                            echo "--- НЕ УДАЛОСЬ ЗАПУСТИТЬ НОДУ (FAILED TO START THE NODE) ---"
-                        fi
                         ;;
                     6)
                         # DELETE
@@ -385,6 +383,7 @@ while true; do
                         break
                         ;;
                 esac
+            done
             ;;
         3)
             exit_script

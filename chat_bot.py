@@ -1,6 +1,13 @@
 import aiohttp
 import asyncio
 import random
+import logging
+
+# Настройка логирования — всё уходит в journald
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+log = logging.getLogger("gaia-bot")
 
 url = "https://$NODE_ID.gaia.domains/v1/chat/completions"
 
@@ -8,8 +15,12 @@ headers = {"accept": "application/json", "Content-Type": "application/json"}
 
 
 def load_from_file(file_name):
-    with open(file_name, "r") as file:
-        return [line.strip() for line in file.readlines()]
+    try:
+        with open(file_name, "r") as file:
+            return [line.strip() for line in file.readlines()]
+    except Exception as e:
+        log.error(f"Не удалось загрузить {file_name}: {e}")
+        return []
 
 
 roles = load_from_file("roles.txt")
@@ -38,8 +49,7 @@ async def chat_loop():
                 "No user message found",
             )
 
-            print(f"Отправлен вопрос: {user_message}")
-
+            log.info(f"Отправлен вопрос: {user_message}")
             data = {"messages": messages}
 
             try:
@@ -49,16 +59,18 @@ async def chat_loop():
                     if response.status == 200:
                         result = await response.json()
                         assistant_response = result["choices"][0]["message"]["content"]
-                        print(f"Получен ответ: {assistant_response}\n{'-'*50}")
+                        log.info(f"Получен ответ: {assistant_response}")
                     else:
-                        print(f"Ошибка: {response.status} - {await response.text()}")
+                        text = await response.text()
+                        log.warning(f"Ошибка: {response.status} - {text}")
             except asyncio.TimeoutError:
-                print("Тайм-аут ожидания. Отправляю следующий запрос...")
+                log.warning("Тайм-аут ожидания. Отправляю следующий запрос...")
             except Exception as e:
-                print(f"Ошибка: {e}")
+                log.exception(f"Непредвиденная ошибка: {e}")
 
             await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
+    log.info("Gaia бот запущен")
     asyncio.run(chat_loop())
