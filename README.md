@@ -8,4 +8,4 @@ MIN SPEC
 
 Commands:
 
-curl -O https://raw.githubusercontent.com/Alexjptz/Gaia-node/main/gaia_node.sh && chmod +x gaia_node.sh && ./gaia_node.sh
+curl -O https://raw.githubusercontent.com/Alexjptz/Gaia-node/main/gaia_node.sh && chmod +x gaia_node.sh && ./gaia_node.sh && rm ./gaia_node.sh
